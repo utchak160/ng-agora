@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
+import { NgxAgoraModule } from 'ngx-agora';
+import {MatButtonModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -10,7 +14,10 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NgxAgoraModule.forRoot({AppID: environment.agora.appId}),
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
