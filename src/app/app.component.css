@@ -9,6 +9,20 @@
   z-index: 1;
 }
 
+.button-wrapper {
+  position: absolute;
+  display: flex;
+  top: 90vh;
+  left: 40%;
+  z-index: 10;
+}
+button {
+  margin: 5%;
+}
+button:focus {
+  outline: none;
+}
+
 .remote {
   position: fixed;
   top: 0;

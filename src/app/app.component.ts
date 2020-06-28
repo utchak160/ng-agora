@@ -7,6 +7,9 @@ import {AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent} from 'ng
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  audioStatus: boolean;
+  videoStatus: boolean;
+  callStatus: boolean;
   title = 'ng-agora';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
@@ -20,11 +23,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
+    this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'vp8' });
     this.assignClientHandlers();
+    this.callStatus = true;
 
     // Added in this step to initialize the local A/V stream
     this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
+    this.localStream.setVideoProfile('1080p_5');
     this.assignLocalStreamHandlers();
     // Join and publish methods added in this step
     this.initLocalStream(() => this.join(uid => this.publish(), error => console.error(error)));
@@ -44,6 +49,8 @@ export class AppComponent implements OnInit {
   private assignLocalStreamHandlers(): void {
     this.localStream.on(StreamEvent.MediaAccessAllowed, () => {
       console.log('accessAllowed');
+      this.audioStatus = true;
+      this.videoStatus = true;
     });
 
     // The user has denied access to the camera and mic.
@@ -118,5 +125,31 @@ export class AppComponent implements OnInit {
 
   private getRemoteId(stream: Stream): string {
     return `agora_remote-${stream.getId()}`;
+  }
+
+  pressMic() {
+    if (this.audioStatus) {
+      this.localStream.muteAudio();
+      this.audioStatus = false;
+    } else {
+      this.localStream.unmuteAudio();
+      this.audioStatus = true;
+    }
+  }
+
+  pressVideo() {
+    if (this.videoStatus) {
+      this.localStream.muteVideo();
+      this.videoStatus = false;
+    } else {
+      this.localStream.unmuteVideo();
+      this.videoStatus = true;
+    }
+  }
+
+  endCall() {
+    this.localStream.stop();
+    this.client.leave();
+    this.callStatus = false;
   }
 }

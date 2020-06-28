@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import {AgoraConfig, NgxAgoraModule} from 'ngx-agora';
-import {MatButtonModule} from '@angular/material';
+import {MatButtonModule, MatIconModule} from '@angular/material';
 
 
 const agoraConfig: AgoraConfig = {
@@ -22,7 +22,8 @@ const agoraConfig: AgoraConfig = {
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxAgoraModule.forRoot(agoraConfig),
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

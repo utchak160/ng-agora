@@ -1,3 +1,22 @@
-<div [id]="localCallId" class="local"></div>
+<div [id]="localCallId" class="local">
+</div>
 
-<div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
+<div *ngFor="let callId of remoteCalls" [id]="callId" class="remote">
+  <div class="button-wrapper">
+    <button mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
+      <mat-icon>mic</mat-icon>
+    </button>
+    <button mat-fab color="warn" (click)="endCall()">
+      <mat-icon>call_end</mat-icon>
+    </button>
+    <button mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
+      <mat-icon>video_call</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="!callStatus">
+  <div class="text-center">
+    <h2>Thanks for choosing our App! 😊</h2>
+  </div>
+</ng-container>
