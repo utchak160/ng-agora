@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   audioStatus: boolean;
   videoStatus: boolean;
   callStatus: boolean;
+  waitingStatus: boolean;
   title = 'ng-agora';
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
     this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'vp8' });
     this.assignClientHandlers();
     this.callStatus = true;
+    this.waitingStatus = true;
 
     // Added in this step to initialize the local A/V stream
     this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
@@ -37,6 +39,7 @@ export class AppComponent implements OnInit {
 
   join(onSuccess?: (uid: number | string) => void, onFailure?: (error: Error) => void): void {
     this.client.join(null, 'foo-bar', this.uid, onSuccess, onFailure);
+    this.waitingStatus = false;
   }
 
   /**

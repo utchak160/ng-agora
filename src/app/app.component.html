@@ -3,14 +3,20 @@
 
 <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote">
   <div class="button-wrapper">
-    <button mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
+    <button *ngIf="audioStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
       <mat-icon>mic</mat-icon>
+    </button>
+    <button *ngIf="!audioStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
+      <mat-icon>mic_off</mat-icon>
     </button>
     <button mat-fab color="warn" (click)="endCall()">
       <mat-icon>call_end</mat-icon>
     </button>
-    <button mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
-      <mat-icon>video_call</mat-icon>
+    <button *ngIf="videoStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
+      <mat-icon>videocam</mat-icon>
+    </button>
+    <button *ngIf="!videoStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
+      <mat-icon>videocam_off</mat-icon>
     </button>
   </div>
 </div>
@@ -18,5 +24,11 @@
 <ng-container *ngIf="!callStatus">
   <div class="text-center">
     <h2>Thanks for choosing our App! 😊</h2>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!waitingStatus">
+  <div class="text-center">
+    <h2>Wait for the other user to join the call! 😊</h2>
   </div>
 </ng-container>
