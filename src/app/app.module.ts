@@ -5,8 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
-import { NgxAgoraModule } from 'ngx-agora';
+import {AgoraConfig, NgxAgoraModule} from 'ngx-agora';
 import {MatButtonModule} from '@angular/material';
+
+
+const agoraConfig: AgoraConfig = {
+  AppID: '6fce895ed6694f50940e5f84275024b9',
+};
 
 @NgModule({
   declarations: [
@@ -16,7 +21,7 @@ import {MatButtonModule} from '@angular/material';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxAgoraModule.forRoot({AppID: environment.agora.appId}),
+    NgxAgoraModule.forRoot(agoraConfig),
     MatButtonModule
   ],
   providers: [],
