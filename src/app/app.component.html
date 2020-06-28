@@ -6,7 +6,7 @@
     <button *ngIf="audioStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
       <mat-icon>mic</mat-icon>
     </button>
-    <button *ngIf="!audioStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
+    <button *ngIf="!audioStatus" mat-raised-button color="warn" style="border-radius: 50%;" (click)="pressMic()">
       <mat-icon>mic_off</mat-icon>
     </button>
     <button mat-fab color="warn" (click)="endCall()">
@@ -15,7 +15,7 @@
     <button *ngIf="videoStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
       <mat-icon>videocam</mat-icon>
     </button>
-    <button *ngIf="!videoStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressVideo()">
+    <button *ngIf="!videoStatus" mat-raised-button color="warn" style="border-radius: 50%;" (click)="pressVideo()">
       <mat-icon>videocam_off</mat-icon>
     </button>
   </div>
