@@ -151,8 +151,9 @@ export class AppComponent implements OnInit {
   }
 
   endCall() {
-    this.localStream.stop();
     this.client.leave();
+    this.client.unpublish(this.localStream, error => console.log('Unpublish Stream error', error));
+    this.localStream.close();
     this.callStatus = false;
   }
 }
