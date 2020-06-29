@@ -2,7 +2,7 @@
 </div>
 
 <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote">
-  <div class="button-wrapper">
+  <div class="button-wrapper" *ngIf="callStatus">
     <button *ngIf="audioStatus" mat-raised-button style="border-radius: 50%; background-color: white" (click)="pressMic()">
       <mat-icon>mic</mat-icon>
     </button>
