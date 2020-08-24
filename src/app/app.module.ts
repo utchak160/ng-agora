@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import {AgoraConfig, NgxAgoraModule} from 'ngx-agora';
 import {MatButtonModule, MatIconModule} from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgxOneSignalModule } from 'ngx-onesignal';
 
 
 const agoraConfig: AgoraConfig = {
@@ -25,7 +26,15 @@ const agoraConfig: AgoraConfig = {
     NgxAgoraModule.forRoot(agoraConfig),
     MatButtonModule,
     MatIconModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('OneSignalSDKWorker.js', { enabled: environment.production }),
+    NgxOneSignalModule.forRoot({
+      appId: 'f37286ea-8d93-4952-9f5e-6750ff5b5a63',
+      allowLocalhostAsSecureOrigin: true,
+      autoRegister: false,
+      notifyButton: {
+        enabled: false
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

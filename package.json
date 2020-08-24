@@ -27,12 +27,14 @@
     "bootstrap": "^4.5.0",
     "hammerjs": "^2.0.8",
     "ngx-agora": "^2.0.1",
+    "ngx-onesignal": "^8.0.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.0",
+    "@angular/cdk": "^8.1.4",
     "@angular/cli": "~8.1.0",
     "@angular/compiler-cli": "~8.1.0",
     "@angular/language-service": "~8.1.0",

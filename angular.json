@@ -20,6 +20,8 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
+              "src\\OneSignalSDKWorker.js",
+              "src\\OneSignalSDKUpdaterWorker.js",
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest"

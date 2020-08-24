@@ -9,6 +9,18 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "f37286ea-8d93-4952-9f5e-6750ff5b5a63",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+  </script>
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1976d2">
 </head>
