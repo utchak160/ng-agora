@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import {AgoraConfig, NgxAgoraModule} from 'ngx-agora';
 import {MatButtonModule, MatIconModule} from '@angular/material';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 
 const agoraConfig: AgoraConfig = {
