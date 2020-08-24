@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import {AgoraConfig, NgxAgoraModule} from 'ngx-agora';
 import {MatButtonModule, MatIconModule} from '@angular/material';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 const agoraConfig: AgoraConfig = {
@@ -23,7 +25,8 @@ const agoraConfig: AgoraConfig = {
     BrowserAnimationsModule,
     NgxAgoraModule.forRoot(agoraConfig),
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
