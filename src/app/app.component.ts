@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
               private sw: SwPush,
   ) {
     this.uid = Math.floor(Math.random() * 100);
-    (window as any).ngxOnesignal = oneSignal;
+    // (window as any).ngxOnesignal = oneSignal;
   }
 
   ngOnInit() {
@@ -153,11 +153,9 @@ export class AppComponent implements OnInit {
       this.localStream.unmuteAudio();
       this.audioStatus = true;
     }
-    console.log(this.sw.isEnabled, this.sw.messages, this.sw.subscription, this.sw.notificationClicks);
   }
 
   pressVideo() {
-    this.oneSignal.subscribe();
     if (this.videoStatus) {
       this.localStream.muteVideo();
       this.videoStatus = false;
@@ -165,10 +163,6 @@ export class AppComponent implements OnInit {
       this.localStream.unmuteVideo();
       this.videoStatus = true;
     }
-    this.sw.requestSubscription({
-      serverPublicKey: this.VAPID_PUBLIC_KEY
-    }).then(value => console.log(value))
-      .catch(err => console.log('Could not subscribe', err));
   }
 
   endCall() {
@@ -177,5 +171,14 @@ export class AppComponent implements OnInit {
     this.localStream.close();
     this.callStatus = false;
     this.waitingStatus = true;
+  }
+
+  subscribe() {
+    this.oneSignal.subscribe();
+    this.sw.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then(value => console.log(value))
+      .catch(err => console.log('Could not subscribe', err));
+    console.log(this.sw.isEnabled, this.sw.messages, this.sw.subscription, this.sw.notificationClicks);
   }
 }
