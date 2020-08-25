@@ -20,18 +20,13 @@ export class AppComponent implements OnInit {
   private localStream: Stream;
   private uid: number;
 
-  constructor(private ngxAgoraService: NgxAgoraService, private oneSignal: OneSignalService, private os: OneSignalStub) {
+  constructor(private ngxAgoraService: NgxAgoraService, private oneSignal: OneSignalService) {
     this.uid = Math.floor(Math.random() * 100);
     (window as any).ngxOnesignal = oneSignal;
   }
 
   ngOnInit() {
-    this.os.getUserId().then((value) => {
-      console.log('[User id]', value);
-    });
-    this.os.registerForPushNotifications().then(() => {
-      console.log('registerForPushNotifications');
-    });
+
     console.log(this.oneSignal.isInitialized, this.oneSignal.isSubscribe);
     this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'vp8' });
     this.assignClientHandlers();

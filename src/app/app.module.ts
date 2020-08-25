@@ -34,6 +34,9 @@ const agoraConfig: AgoraConfig = {
       notifyButton: {
         enabled: false
       },
+      promptOptions: {
+        showCredit: false
+      },
     }),
   ],
   providers: [],
