@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent} from 'ngx-agora';
-import { OneSignalService, OneSignalStub} from 'ngx-onesignal';
+import {OneSignalService} from 'ngx-onesignal';
+import {SwPush, SwUpdate} from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,9 @@ import { OneSignalService, OneSignalStub} from 'ngx-onesignal';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  readonly VAPID_PUBLIC_KEY = 'BIY_rijmGcrCNFyP2Wqhruwwy5YAKJHVcUMWopkyWMMX5NvpIuRbA8CRW754kdjJPocnbxgEB_QqHwgO3GqDNTA';
+
   audioStatus: boolean;
   videoStatus: boolean;
   callStatus: boolean;
@@ -20,21 +24,28 @@ export class AppComponent implements OnInit {
   private localStream: Stream;
   private uid: number;
 
-  constructor(private ngxAgoraService: NgxAgoraService, private oneSignal: OneSignalService) {
+  constructor(private ngxAgoraService: NgxAgoraService,
+              private oneSignal: OneSignalService,
+              private update: SwUpdate,
+              private sw: SwPush,
+  ) {
     this.uid = Math.floor(Math.random() * 100);
     (window as any).ngxOnesignal = oneSignal;
   }
 
   ngOnInit() {
-
+    this.update.available.subscribe((event) => {
+      console.log('current', event.current);
+      console.log('available', event.available);
+    });
     console.log(this.oneSignal.isInitialized, this.oneSignal.isSubscribe);
-    this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'vp8' });
+    this.client = this.ngxAgoraService.createClient({mode: 'rtc', codec: 'vp8'});
     this.assignClientHandlers();
     this.callStatus = true;
     this.waitingStatus = true;
 
     // Added in this step to initialize the local A/V stream
-    this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
+    this.localStream = this.ngxAgoraService.createStream({streamID: this.uid, audio: true, video: true, screen: false});
     this.localStream.setVideoProfile('1080p_5');
     this.assignLocalStreamHandlers();
     // Join and publish methods added in this step
@@ -97,7 +108,7 @@ export class AppComponent implements OnInit {
 
     this.client.on(ClientEvent.RemoteStreamAdded, evt => {
       const stream = evt.stream as Stream;
-      this.client.subscribe(stream, { audio: true, video: true }, err => {
+      this.client.subscribe(stream, {audio: true, video: true}, err => {
         console.log('Subscribe stream failed', err);
       });
     });
@@ -142,6 +153,7 @@ export class AppComponent implements OnInit {
       this.localStream.unmuteAudio();
       this.audioStatus = true;
     }
+    console.log(this.sw.isEnabled, this.sw.messages, this.sw.subscription, this.sw.notificationClicks);
   }
 
   pressVideo() {
@@ -153,9 +165,14 @@ export class AppComponent implements OnInit {
       this.localStream.unmuteVideo();
       this.videoStatus = true;
     }
+    this.sw.requestSubscription({
+      serverPublicKey: this.VAPID_PUBLIC_KEY
+    }).then(value => console.log(value))
+      .catch(err => console.log('Could not subscribe', err));
   }
 
   endCall() {
+    this.sw.unsubscribe().then(r => console.log(r));
     this.client.leave();
     this.localStream.close();
     this.callStatus = false;
