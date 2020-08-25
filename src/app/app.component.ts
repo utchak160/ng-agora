@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent} from 'ngx-agora';
-import {OneSignalService} from 'ngx-onesignal';
+import {OneSignalOptions, OneSignalService, OneSignalStub} from 'ngx-onesignal';
+import {ngxOnesignal} from 'ngx-onesignal/dist/schematics/ng-add';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +21,21 @@ export class AppComponent implements OnInit {
   private localStream: Stream;
   private uid: number;
 
-  constructor(private ngxAgoraService: NgxAgoraService, private oneSignal: OneSignalService) {
+  constructor(private ngxAgoraService: NgxAgoraService, private oneSignal: OneSignalService, private os: OneSignalStub) {
     this.uid = Math.floor(Math.random() * 100);
     (window as any).ngxOnesignal = oneSignal;
   }
 
   ngOnInit() {
-    this.oneSignal.subscribe();
+    this.os.on('Clicked', () => {
+      console.log('Clicked');
+    });
+    this.os.getUserId().then((value) => {
+      console.log('[User id]', value);
+    });
+    this.os.registerForPushNotifications().then(() => {
+      console.log('registerForPushNotifications');
+    });
     console.log(this.oneSignal.isInitialized, this.oneSignal.isSubscribe);
     this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'vp8' });
     this.assignClientHandlers();
@@ -145,6 +154,7 @@ export class AppComponent implements OnInit {
   }
 
   pressVideo() {
+    this.oneSignal.subscribe();
     if (this.videoStatus) {
       this.localStream.muteVideo();
       this.videoStatus = false;
