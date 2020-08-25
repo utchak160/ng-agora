@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent} from 'ngx-agora';
-import {OneSignalOptions, OneSignalService, OneSignalStub} from 'ngx-onesignal';
-import {ngxOnesignal} from 'ngx-onesignal/dist/schematics/ng-add';
+import { OneSignalService, OneSignalStub} from 'ngx-onesignal';
 
 @Component({
   selector: 'app-root',
