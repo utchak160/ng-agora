@@ -175,6 +175,8 @@ export class AppComponent implements OnInit {
 
   subscribe() {
     this.oneSignal.subscribe();
+    this.oneSignal.push([undefined]).then(r => console.log(r));
+    console.log(this.oneSignal.isInitialized, this.oneSignal.isOptedOut, this.oneSignal.isSubscribe, this.oneSignal.isSupported);
     this.sw.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     }).then(value => console.log(value))
