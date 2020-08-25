@@ -26,9 +26,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.os.on('Clicked', () => {
-      console.log('Clicked');
-    });
     this.os.getUserId().then((value) => {
       console.log('[User id]', value);
     });
